@@ -2,7 +2,8 @@
 
 Search-friendly summary: Free, browser-based Leslie matrix calculator to compute the dominant eigenvalue (lambda, growth rate) and eigenvector (stable age distribution) using the power iteration method. Ideal for demography, ecology, and linear algebra coursework and research.
 
-Live site: https://evcal.ndulina.com/  
+Live site: https://evcal.ndulina.com/
+  
 GitHub Pages (canonical): https://dulinapathirana.github.io/evcal/
 
 ## What this tool does
@@ -32,6 +33,7 @@ GitHub Pages (canonical): https://dulinapathirana.github.io/evcal/
 - Project homepage: https://dulinapathirana.github.io/evcal/
 - Source code: https://github.com/DulinaPathirana/evcal
 - Author: https://github.com/DulinaPathirana
+- Sitemap: https://evcal.ndulina.com/sitemap.xml
 
 ## Notes
 - This repository focuses on usability and clarity while keeping computations in the browser
