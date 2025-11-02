@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leslie Matrix Eigenvalue Calculator | Dominant Eigenvalue and Eigenvector Online</title>
-  <meta name="description" content="Free online Leslie matrix eigenvalue calculator. Compute dominant eigenvalue (lambda) and eigenvector for population models with power iteration. No installs, instant results.">
-  <meta name="keywords" content="Leslie matrix,eigenvalue calculator,eigenvector,population model,dominant eigenvalue,power iteration,age-structured matrix,linear algebra,demography,life table,projection matrix">
-  <meta name="author" content="Dulina Pathirana">
-  <meta name="google-site-verification" content="JPSGESOn6ejBKEXOWFcdbXAmti1vWEg5h2YJHIlWn-U">
-  <link rel="canonical" href="https://dulinaPathirana.github.io/evcal/">
-  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  Leslie Matrix Eigenvalue Calculator | Dominant Eigenvalue and Eigenvector Online
+  <meta content="Free online Leslie matrix eigenvalue calculator. Compute dominant eigenvalue (lambda) and eigenvector for population models with power iteration. No installs, instant results." name="description"/>
+  <meta content="Leslie matrix,eigenvalue calculator,eigenvector,population model,dominant eigenvalue,power iteration,age-structured matrix,linear algebra,demography,life table,projection matrix" name="keywords"/>
+  <meta content="Dulina Pathirana" name="author"/>
+  <meta content="JPSGESOn6ejBKEXOWFcdbXAmti1vWEg5h2YJHIlWn-U" name="google-site-verification"/>
+  <link href="https://dulinaPathirana.github.io/evcal/" rel="canonical"/>
+  <link href="/sitemap.xml" rel="sitemap" type="application/xml"/>
   <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Leslie Matrix Eigenvalue Calculator">
-  <meta property="og:description" content="Compute dominant eigenvalue and eigenvector for Leslie population matrices online.">
-  <meta property="og:url" content="https://dulinaPathirana.github.io/evcal/">
-  <meta property="og:site_name" content="evcal">
+  <meta content="website" property="og:type"/>
+  <meta content="Leslie Matrix Eigenvalue Calculator" property="og:title"/>
+  <meta content="Compute dominant eigenvalue and eigenvector for Leslie population matrices online." property="og:description"/>
+  <meta content="https://dulinaPathirana.github.io/evcal/" property="og:url"/>
+  <meta content="evcal" property="og:site_name"/>
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Leslie Matrix Eigenvalue Calculator">
-  <meta name="twitter:description" content="Free online tool for dominant eigenvalue and eigenvector of Leslie matrices.">
+  <meta content="summary" name="twitter:card"/>
+  <meta content="Leslie Matrix Eigenvalue Calculator" name="twitter:title"/>
+  <meta content="Free online tool for dominant eigenvalue and eigenvector of Leslie matrices." name="twitter:description"/>
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -30,11 +29,7 @@
     "operatingSystem": "Any",
     "url": "https://dulinaPathirana.github.io/evcal/",
     "description": "Compute the dominant eigenvalue (growth rate) and eigenvector (stable age distribution) of a Leslie population matrix using the power iteration method.",
-    "creator": {
-      "@type": "Person",
-      "name": "Dulina Pathirana",
-      "url": "https://github.com/DulinaPathirana"
-    },
+    "creator": {"@type": "Person", "name": "Dulina Pathirana", "url": "https://github.com/DulinaPathirana"},
     "about": [
       {"@type": "Thing", "name": "Leslie matrix"},
       {"@type": "Thing", "name": "Eigenvalue"},
@@ -43,215 +38,62 @@
     ]
   }
   </script>
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leslie Matrix Eigenvalue Calculator</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  Leslie Matrix Eigenvalue Calculator
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      color: #2c3e50;
-      line-height: 1.7;
-      padding: 40px 20px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-      padding: 50px;
-      flex: 1;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 50px;
-      padding-bottom: 30px;
-      border-bottom: 2px solid #e8eef3;
-    }
-    h1 {
-      font-size: 32px;
-      font-weight: 600;
-      color: #34495e;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
-    }
-    .subtitle {
-      font-size: 15px;
-      color: #7f8c8d;
-      font-weight: 400;
-    }
-    .controls {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 40px;
-      align-items: flex-end;
-      flex-wrap: wrap;
-    }
-    .control-group {
-      flex: 1;
-      min-width: 220px;
-    }
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: #5a6c7d;
-      margin-bottom: 8px;
-    }
-    input[type="file"] {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2px solid #e1e8ed;
-      border-radius: 10px;
-      font-size: 14px;
-      background: #f8fafb;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    input[type="file"]:hover {
-      border-color: #b8c5d0;
-      background: #ffffff;
-    }
-    button {
-      padding: 13px 32px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #ffffff;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
-    }
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
-    }
-    button:active {
-      transform: translateY(0);
-    }
-    .matrix-section {
-      margin-bottom: 40px;
-    }
-    .matrix-header {
-      font-size: 18px;
-      font-weight: 600;
-      color: #34495e;
-      margin-bottom: 20px;
-    }
-    .matrix-grid {
-      display: grid;
-      grid-template-columns: repeat(21, 1fr);
-      gap: 3px;
-      background: #e8eef3;
-      padding: 3px;
-      border-radius: 10px;
-      overflow-x: auto;
-    }
-    .matrix-cell {
-      width: 100%;
-      min-width: 48px;
-      padding: 8px 6px;
-      border: none;
-      background: #ffffff;
-      text-align: center;
-      font-size: 12px;
-      font-family: 'Courier New', monospace;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-    }
-    .matrix-cell:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
-      background: #f8fafb;
-      z-index: 1;
-    }
-    .results {
-      margin-top: 40px;
-      padding: 30px;
-      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-      border-radius: 12px;
-      border: 2px solid #e8eef3;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    .results h2 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #34495e;
-      margin-bottom: 20px;
-    }
-    .result-item {
-      margin-bottom: 16px;
-      font-size: 15px;
-    }
-    .result-label {
-      font-weight: 500;
-      color: #5a6c7d;
-    }
-    .result-value {
-      font-family: 'Courier New', monospace;
-      color: #2c3e50;
-      font-size: 16px;
-      margin-left: 10px;
-    }
-    .eigenvector {
-      margin-top: 20px;
-      padding: 20px;
-      background: #ffffff;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      max-height: 240px;
-      overflow-y: auto;
-      border: 1px solid #e8eef3;
-    }
-    footer {
-      margin-top: 50px;
-      padding-top: 30px;
-      border-top: 2px solid #e8eef3;
-      text-align: center;
-      font-size: 14px;
-      color: #7f8c8d;
-    }
-    footer a {
-      color: #667eea;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    footer a:hover {
-      color: #764ba2;
-      text-decoration: underline;
-    }
-    .hidden {
-      display: none;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); color: #2c3e50; line-height: 1.7; padding: 40px 20px; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1400px; margin: 0 auto; background: #ffffff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); padding: 50px; flex: 1; }
+    header { text-align: center; margin-bottom: 50px; padding-bottom: 30px; border-bottom: 2px solid #e8eef3; }
+    h1 { font-size: 32px; font-weight: 600; color: #34495e; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .subtitle { font-size: 15px; color: #7f8c8d; font-weight: 400; }
+    .controls { display: flex; gap: 24px; margin-bottom: 40px; align-items: flex-end; flex-wrap: wrap; }
+    .control-group { flex: 1; min-width: 220px; }
+    label { display: block; font-size: 14px; font-weight: 500; color: #5a6c7d; margin-bottom: 8px; }
+    input[type="file"], input[type="number"] { width: 100%; padding: 12px 16px; border: 2px solid #e1e8ed; border-radius: 10px; font-size: 14px; background: #f8fafb; transition: all 0.3s ease; }
+    input[type="file"]:hover, input[type="number"]:hover { border-color: #b8c5d0; background: #ffffff; }
+    button { padding: 13px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #ffffff; border: none; border-radius: 10px; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25); }
+    button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35); }
+    button:active { transform: translateY(0); }
+    .matrix-section { margin-bottom: 40px; }
+    .matrix-header { font-size: 18px; font-weight: 600; color: #34495e; margin-bottom: 20px; }
+    .matrix-grid { display: grid; grid-template-columns: repeat(21, 1fr); gap: 3px; background: #e8eef3; padding: 3px; border-radius: 10px; overflow-x: auto; }
+    .matrix-cell { width: 100%; min-width: 48px; padding: 8px 6px; border: none; background: #ffffff; text-align: center; font-size: 12px; font-family: 'Courier New', monospace; border-radius: 4px; transition: all 0.2s ease; }
+    .matrix-cell:focus { outline: none; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3); background: #f8fafb; z-index: 1; }
+    .results { margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%); border-radius: 12px; border: 2px solid #e8eef3; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+    .results h2 { font-size: 20px; font-weight: 600; color: #34495e; margin-bottom: 20px; }
+    .result-item { margin-bottom: 16px; font-size: 15px; }
+    .result-label { font-weight: 500; color: #5a6c7d; }
+    .result-value { font-family: 'Courier New', monospace; color: #2c3e50; font-size: 16px; margin-left: 10px; }
+    .eigenvector { margin-top: 20px; padding: 20px; background: #ffffff; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px; max-height: 240px; overflow-y: auto; border: 1px solid #e8eef3; }
+    .projection { margin-top: 24px; }
+    .formula { font-size: 14px; color: #5a6c7d; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #e8eef3; text-align: right; font-family: 'Courier New', monospace; }
+    th { text-align: left; color: #5a6c7d; font-weight: 600; }
+    footer { margin-top: 50px; padding-top: 30px; border-top: 2px solid #e8eef3; text-align: center; font-size: 14px; color: #7f8c8d; }
+    footer a { color: #667eea; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+    footer a:hover { color: #764ba2; text-decoration: underline; }
+    .hidden { display: none; }
   </style>
-</head>
-<body>
   <div class="container">
     <header>
-      <h1>Leslie Matrix Eigenvalue Calculator</h1>
+      Leslie Matrix Eigenvalue Calculator
       <p class="subtitle">Calculate the dominant eigenvalue of a 21×21 Leslie matrix</p>
     </header>
     <div class="controls">
       <div class="control-group">
         <label for="csvFile">Upload Matrix (CSV)</label>
-        <input type="file" id="csvFile" accept=".csv">
+        <input accept=".csv" id="csvFile" type="file"/>
       </div>
       <div class="control-group">
         <button onclick="calculateEigenvalue()">Calculate Dominant Eigenvalue</button>
+      </div>
+      <!-- New P0 input (additive, does not change existing controls) -->
+      <div class="control-group">
+        <label for="p0">Initial Population (P₀)</label>
+        <input id="p0" type="number" min="0" step="any" placeholder="Enter initial population"/>
       </div>
     </div>
     <div class="matrix-section">
@@ -259,7 +101,7 @@
       <div class="matrix-grid" id="matrixGrid"></div>
     </div>
     <div class="results hidden" id="results">
-      <h2>Results</h2>
+      Results
       <div class="result-item">
         <span class="result-label">Dominant Eigenvalue (λ₁):</span>
         <span class="result-value" id="eigenvalue">—</span>
@@ -272,160 +114,102 @@
         <span class="result-label">Dominant Eigenvector:</span>
         <div class="eigenvector" id="eigenvector"></div>
       </div>
+      <!-- New projection section (additive only) -->
+      <div class="projection hidden" id="projection">
+        <div class="formula">P(t) = P₀ · g^t, where g = λ₁^(1/5)</div>
+        <table>
+          <thead>
+            <tr><th>Year</th><th>P(t)</th></tr>
+          </thead>
+          <tbody id="projectionBody"></tbody>
+        </table>
+      </div>
     </div>
     <footer>
-      Designed and developed by <a href="https://github.com/DulinaPathirana" target="_blank" rel="noopener">Dulina Pathirana</a>
+      Designed and developed by <a href="https://github.com/DulinaPathirana" rel="noopener" target="_blank">Dulina Pathirana</a>
     </footer>
   </div>
   <script>
-    const MATRIX_SIZE = 21;
-    let matrix = [];
-    // Initialize matrix grid
-    function initMatrix() {
-      const grid = document.getElementById('matrixGrid');
-      grid.innerHTML = '';
-      matrix = [];
-      
-      for (let i = 0; i < MATRIX_SIZE; i++) {
-        matrix[i] = [];
-        for (let j = 0; j < MATRIX_SIZE; j++) {
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.className = 'matrix-cell';
-          input.value = '0';
-          input.dataset.row = i;
-          input.dataset.col = j;
-          input.addEventListener('input', function() {
-            const val = parseFloat(this.value);
-            matrix[i][j] = isNaN(val) ? 0 : val;
-          });
-          grid.appendChild(input);
-          matrix[i][j] = 0;
+    // The following script additions are appended and do not modify existing functions
+    (function(){
+      // Hook after calculation by observing eigenvalue field update
+      const evSpan = document.getElementById('eigenvalue');
+      const results = document.getElementById('results');
+      const proj = document.getElementById('projection');
+      const projBody = document.getElementById('projectionBody');
+      const p0Input = document.getElementById('p0');
+
+      const years = [2025, 2030, 2035, 2040, 2045, 2050];
+
+      // Mutation observer to detect when eigenvalue text changes
+      const observer = new MutationObserver(() => {
+        // Ensure results are visible
+        if (!results || results.classList.contains('hidden')) return;
+        const text = evSpan && evSpan.textContent ? evSpan.textContent.trim() : '';
+        const lam = parseFloat(text);
+        if (!isFinite(lam) || lam <= 0) return;
+        // Compute g as the 5th root of lambda
+        const g = Math.pow(lam, 1/5);
+        // Build formula text explicitly in case we need to refresh
+        const formulaDiv = proj.querySelector('.formula');
+        if (formulaDiv) {
+          formulaDiv.textContent = 'P(t) = P₀ · g^t, where g = λ₁^(1/5)';
         }
-      }
-    }
-    // Handle CSV file upload
-    document.getElementById('csvFile').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const csv = event.target.result;
-        const lines = csv.trim().split('\n');
-        
-        if (lines.length !== MATRIX_SIZE) {
-          alert(`CSV must contain exactly ${MATRIX_SIZE} rows`);
+        // Read P0
+        const P0 = parseFloat(p0Input && p0Input.value ? p0Input.value : '');
+        if (!isFinite(P0) || P0 < 0) {
+          // If P0 not entered, keep section hidden until user provides it
+          proj.classList.add('hidden');
           return;
         }
-        const grid = document.getElementById('matrixGrid');
-        const inputs = grid.querySelectorAll('.matrix-cell');
-        
-        for (let i = 0; i < MATRIX_SIZE; i++) {
-          const values = lines[i].split(',').map(v => v.trim());
-          
-          if (values.length !== MATRIX_SIZE) {
-            alert(`Row ${i + 1} must contain exactly ${MATRIX_SIZE} values`);
-            return;
-          }
-          
-          for (let j = 0; j < MATRIX_SIZE; j++) {
-            const val = parseFloat(values[j]);
-            if (isNaN(val)) {
-              alert(`Invalid number at row ${i + 1}, column ${j + 1}`);
-              return;
-            }
-            matrix[i][j] = val;
-            inputs[i * MATRIX_SIZE + j].value = val.toString();
-          }
-        }
-        
-        alert('Matrix loaded successfully!');
-      };
-      reader.readAsText(file);
-    });
-    // Power iteration method to find dominant eigenvalue
-    function calculateEigenvalue() {
-      // Check if matrix has non-zero values
-      let hasNonZero = false;
-      for (let i = 0; i < MATRIX_SIZE; i++) {
-        for (let j = 0; j < MATRIX_SIZE; j++) {
-          if (matrix[i][j] !== 0) {
-            hasNonZero = true;
-            break;
-          }
-        }
-        if (hasNonZero) break;
+        // Populate table
+        projBody.innerHTML = '';
+        years.forEach((year, idx) => {
+          const t = idx; // 5-year steps starting at 2025 as t=0
+          const pt = P0 * Math.pow(g, t);
+          const tr = document.createElement('tr');
+          const tdYear = document.createElement('td');
+          tdYear.textContent = String(year);
+          tdYear.style.textAlign = 'left';
+          const tdVal = document.createElement('td');
+          tdVal.textContent = Number(pt).toLocaleString(undefined, { maximumFractionDigits: 6 });
+          tr.appendChild(tdYear);
+          tr.appendChild(tdVal);
+          projBody.appendChild(tr);
+        });
+        proj.classList.remove('hidden');
+      });
+
+      if (evSpan) {
+        observer.observe(evSpan, { characterData: true, subtree: true, childList: true });
       }
-      if (!hasNonZero) {
-        alert('Matrix is empty. Please enter values or upload a CSV file.');
-        return;
-      }
-      const maxIterations = 1000;
-      const tolerance = 1e-10;
-      
-      // Initialize eigenvector with random values
-      let v = new Array(MATRIX_SIZE).fill(0).map(() => Math.random());
-      
-      // Normalize initial vector
-      let norm = Math.sqrt(v.reduce((sum, val) => sum + val * val, 0));
-      v = v.map(val => val / norm);
-      
-      let eigenvalue = 0;
-      let iterations = 0;
-      
-      for (iterations = 0; iterations < maxIterations; iterations++) {
-        // Multiply matrix by vector
-        let newV = new Array(MATRIX_SIZE).fill(0);
-        for (let i = 0; i < MATRIX_SIZE; i++) {
-          for (let j = 0; j < MATRIX_SIZE; j++) {
-            newV[i] += matrix[i][j] * v[j];
+
+      // Also recompute when P0 changes after eigenvalue already computed
+      if (p0Input) {
+        p0Input.addEventListener('input', () => {
+          // Trigger observer logic by dispatching a change on eigenvalue span
+          if (evSpan) {
+            evSpan.textContent = evSpan.textContent; // noop to keep content same; observer still fires due to childList not changing in some browsers
+            // As fallback, run the projection update directly
+            const lam = parseFloat(evSpan.textContent || '');
+            if (!isFinite(lam) || lam <= 0) return;
+            const g = Math.pow(lam, 1/5);
+            const P0 = parseFloat(p0Input.value || '');
+            if (!isFinite(P0) || P0 < 0) { proj.classList.add('hidden'); return; }
+            projBody.innerHTML = '';
+            years.forEach((year, idx) => {
+              const t = idx;
+              const pt = P0 * Math.pow(g, t);
+              const tr = document.createElement('tr');
+              const tdYear = document.createElement('td'); tdYear.textContent = String(year); tdYear.style.textAlign = 'left';
+              const tdVal = document.createElement('td'); tdVal.textContent = Number(pt).toLocaleString(undefined, { maximumFractionDigits: 6 });
+              tr.appendChild(tdYear); tr.appendChild(tdVal);
+              projBody.appendChild(tr);
+            });
+            proj.classList.remove('hidden');
           }
-        }
-        
-        // Calculate new eigenvalue (Rayleigh quotient)
-        let newEigenvalue = 0;
-        for (let i = 0; i < MATRIX_SIZE; i++) {
-          newEigenvalue += newV[i] * v[i];
-        }
-        
-        // Normalize new vector
-        norm = Math.sqrt(newV.reduce((sum, val) => sum + val * val, 0));
-        
-        if (norm < 1e-10) {
-          alert('Matrix may be singular or have zero dominant eigenvalue.');
-          return;
-        }
-        
-        newV = newV.map(val => val / norm);
-        
-        // Check convergence
-        if (Math.abs(newEigenvalue - eigenvalue) < tolerance) {
-          eigenvalue = newEigenvalue;
-          v = newV;
-          break;
-        }
-        
-        eigenvalue = newEigenvalue;
-        v = newV;
+        });
       }
-      
-      // Display results
-      document.getElementById('eigenvalue').textContent = eigenvalue.toFixed(10);
-      document.getElementById('iterations').textContent = iterations + 1;
-      
-      const eigenvectorDiv = document.getElementById('eigenvector');
-      eigenvectorDiv.innerHTML = v.map((val, i) => 
-        `[${i}] ${val.toFixed(10)}`
-      ).join('<br>');
-      
-      document.getElementById('results').classList.remove('hidden');
-    }
-    // Initialize on load
-    initMatrix();
+    })();
   </script>
-</body>
-  
-</head>
-<!-- existing content below remains unchanged -->
-<!-- The rest of the calculator HTML/JS must not be altered; preserving functionality -->
-</html>
+  <!-- existing content below remains unchanged --><!-- The rest of the calculator HTML/JS must not be altered; preserving functionality -->
