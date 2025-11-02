@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leslie Matrix Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .input-section {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="number"], input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .matrix-container {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            min-width: 60px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        input[type="number"].matrix-input {
+            width: 80px;
+            padding: 5px;
+            text-align: center;
+        }
+        .results {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+        .info {
+            color: #666;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Leslie Matrix Calculator</h1>
+        
+        <div class="input-section">
+            <label for="matrixSize">Matrix Size (n x n):</label>
+            <input type="number" id="matrixSize" min="2" max="10" value="3">
+            <button onclick="generateMatrix()">Generate Matrix</button>
+        </div>
+
+        <div class="input-section">
+            <label for="csvFile">Import from CSV:</label>
+            <input type="file" id="csvFile" accept=".csv">
+            <button onclick="importCSV()">Import CSV</button>
+            <div class="info">CSV format: Each row should contain values separated by commas</div>
+        </div>
+
+        <div class="matrix-container">
+            <h3>Leslie Matrix:</h3>
+            <div id="matrixTable"></div>
+        </div>
+
+        <div class="input-section">
+            <label for="initialPop">Initial Population Vector (comma-separated):</label>
+            <input type="text" id="initialPop" placeholder="e.g., 100, 50, 25">
+        </div>
+
+        <div class="input-section">
+            <label for="timeSteps">Number of Time Steps:</label>
+            <input type="number" id="timeSteps" min="1" max="100" value="10">
+        </div>
+
+        <button onclick="calculate()">Calculate Population Dynamics</button>
+        <button onclick="calculateEigenvalues()">Calculate Eigenvalues</button>
+
+        <div id="error" class="error"></div>
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        let matrixSize = 3;
+        let leslieMatrix = [];
+
+        function generateMatrix() {
+            matrixSize = parseInt(document.getElementById('matrixSize').value);
+            if (matrixSize < 2 || matrixSize > 10) {
+                showError('Matrix size must be between 2 and 10');
+                return;
+            }
+            
+            leslieMatrix = Array(matrixSize).fill(0).map(() => Array(matrixSize).fill(0));
+            displayMatrix();
+            clearError();
+        }
+
+        function displayMatrix() {
+            let table = '<table><thead><tr>';
+            for (let i = 0; i < matrixSize; i++) {
+                table += `<th>Col ${i + 1}</th>`;
+            }
+            table += '</tr></thead><tbody>';
+            
+            for (let i = 0; i < matrixSize; i++) {
+                table += '<tr>';
+                for (let j = 0; j < matrixSize; j++) {
+                    const value = leslieMatrix[i][j] || 0;
+                    table += `<td><input type="number" class="matrix-input" step="0.01" value="${value}" 
+                              onchange="updateMatrix(${i}, ${j}, this.value)"></td>`;
+                }
+                table += '</tr>';
+            }
+            table += '</tbody></table>';
+            document.getElementById('matrixTable').innerHTML = table;
+        }
+
+        function updateMatrix(i, j, value) {
+            leslieMatrix[i][j] = parseFloat(value) || 0;
+        }
+
+        function importCSV() {
+            const fileInput = document.getElementById('csvFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showError('Please select a CSV file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const text = e.target.result;
+                    const rows = text.trim().split('\n');
+                    const matrix = rows.map(row => 
+                        row.split(',').map(val => parseFloat(val.trim()))
+                    );
+
+                    if (matrix.length !== matrix[0].length) {
+                        showError('CSV must contain a square matrix');
+                        return;
+                    }
+
+                    matrixSize = matrix.length;
+                    document.getElementById('matrixSize').value = matrixSize;
+                    leslieMatrix = matrix;
+                    displayMatrix();
+                    clearError();
+                } catch (error) {
+                    showError('Error parsing CSV file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function calculate() {
+            clearError();
+            
+            const initialPopStr = document.getElementById('initialPop').value;
+            const timeSteps = parseInt(document.getElementById('timeSteps').value);
+            
+            if (!initialPopStr) {
+                showError('Please enter initial population vector');
+                return;
+            }
+
+            const initialPop = initialPopStr.split(',').map(val => parseFloat(val.trim()));
+            
+            if (initialPop.length !== matrixSize) {
+                showError(`Initial population vector must have ${matrixSize} elements`);
+                return;
+            }
+
+            if (initialPop.some(isNaN)) {
+                showError('Invalid numbers in initial population vector');
+                return;
+            }
+
+            let results = '<h3>Population Dynamics:</h3>';
+            let currentPop = [...initialPop];
+            
+            results += `<p><strong>Time 0:</strong> [${currentPop.map(v => v.toFixed(2)).join(', ')}]</p>`;
+            
+            for (let t = 1; t <= timeSteps; t++) {
+                currentPop = multiplyMatrixVector(leslieMatrix, currentPop);
+                results += `<p><strong>Time ${t}:</strong> [${currentPop.map(v => v.toFixed(2)).join(', ')}] 
+                            (Total: ${currentPop.reduce((a, b) => a + b, 0).toFixed(2)})</p>`;
+            }
+
+            document.getElementById('results').innerHTML = results;
+        }
+
+        function multiplyMatrixVector(matrix, vector) {
+            const result = [];
+            for (let i = 0; i < matrix.length; i++) {
+                let sum = 0;
+                for (let j = 0; j < vector.length; j++) {
+                    sum += matrix[i][j] * vector[j];
+                }
+                result.push(sum);
+            }
+            return result;
+        }
+
+        function calculateEigenvalues() {
+            clearError();
+            
+            if (matrixSize > 4) {
+                showError('Eigenvalue calculation is only supported for matrices up to 4x4 due to computational complexity');
+                return;
+            }
+
+            try {
+                const eigenvalues = powerMethod(leslieMatrix);
+                let results = '<h3>Eigenvalue Analysis:</h3>';
+                results += `<p><strong>Dominant Eigenvalue (λ₁):</strong> ${eigenvalues.value.toFixed(4)}</p>`;
+                results += `<p><strong>Dominant Eigenvector:</strong> [${eigenvalues.vector.map(v => v.toFixed(4)).join(', ')}]</p>`;
+                results += '<p class="info">The dominant eigenvalue indicates the long-term population growth rate.</p>';
+                results += '<p class="info">If λ₁ > 1: population grows; λ₁ = 1: stable; λ₁ < 1: population declines</p>';
+                
+                document.getElementById('results').innerHTML = results;
+            } catch (error) {
+                showError('Error calculating eigenvalues: ' + error.message);
+            }
+        }
+
+        function powerMethod(matrix, maxIterations = 1000, tolerance = 1e-6) {
+            const n = matrix.length;
+            let vector = Array(n).fill(1);
+            let eigenvalue = 0;
+            
+            for (let iter = 0; iter < maxIterations; iter++) {
+                const newVector = multiplyMatrixVector(matrix, vector);
+                const newEigenvalue = Math.max(...newVector.map(Math.abs));
+                
+                if (newEigenvalue === 0) {
+                    throw new Error('Zero eigenvalue encountered');
+                }
+                
+                vector = newVector.map(v => v / newEigenvalue);
+                
+                if (Math.abs(newEigenvalue - eigenvalue) < tolerance) {
+                    return { value: newEigenvalue, vector: vector };
+                }
+                
+                eigenvalue = newEigenvalue;
+            }
+            
+            return { value: eigenvalue, vector: vector };
+        }
+
+        function showError(message) {
+            document.getElementById('error').textContent = message;
+        }
+
+        function clearError() {
+            document.getElementById('error').textContent = '';
+        }
+
+        // Initialize matrix on page load
+        window.onload = function() {
+            generateMatrix();
+        };
+    </script>
+</body>
+</html>
