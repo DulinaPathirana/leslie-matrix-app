@@ -1,162 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leslie Matrix Calculator (21x21)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leslie Matrix Eigenvalue Calculator</title>
   <style>
-    :root{
-      --bg: #0f1226;
-      --card: #121633;
-      --muted: #8a93b2;
-      --text: #e6e9f4;
-      --brand1:#6c7cff;
-      --brand2:#9a6bff;
-      --accent:#18d8c6;
-      --ring: rgba(108,124,255,.35);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --shadow-soft: 0 6px 18px rgba(0,0,0,.25);
-      --radius: 16px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 600px at 10% -10%, rgba(108,124,255,.18), transparent 60%),
-                  radial-gradient(1000px 500px at 110% 0%, rgba(154,107,255,.16), transparent 60%),
-                  linear-gradient(180deg, #0e1124 0%, #0b0e20 100%);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      padding: 24px;
-    }
-    .container{
-      max-width: 1200px; margin: 0 auto; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.06); border-radius: var(--radius); box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    header{
-      position: relative; padding: 40px 28px; text-align: center; background:
-        radial-gradient(60% 120% at 50% -20%, rgba(108,124,255,.35), transparent 70%),
-        radial-gradient(80% 120% at 120% 10%, rgba(154,107,255,.28), transparent 70%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .brand-badge{
-      display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px;
-      background: rgba(108,124,255,.12); color: #dfe3ff; border:1px solid rgba(108,124,255,.25);
-      font-size: 12px; text-transform: uppercase; letter-spacing:.12em; margin-bottom: 14px;
-    }
-    .dot{width:8px;height:8px;border-radius:50%;background: var(--accent); box-shadow:0 0 0 4px rgba(24,216,198,.12)}
-    h1{font-weight:600; letter-spacing:-.02em; font-size: clamp(26px, 3.2vw, 36px); margin: 4px 0 6px}
-    .subtitle{color: var(--muted); font-weight: 400; font-size: 14px}
-
-    .content{display:grid; grid-template-columns: 1fr; gap: 22px; padding: 28px}
-
-    .card{background: var(--card); border: 1px solid rgba(255,255,255,.06); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-soft)}
-    .grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px}
-
-    label{display:block; color: #c8cdee; font-size: 13px; margin: 0 0 6px 2px}
-    input[type="number"], input[type="text"], input[type="file"]{
-      width:100%; border-radius: 12px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04);
-      color: var(--text); padding: 12px 14px; outline: none; transition: .2s border, .2s box-shadow, .2s background;
-    }
-    input[type="number"]:focus, input[type="text"]:focus, input[type="file"]:focus{
-      border-color: var(--brand1); box-shadow: 0 0 0 4px var(--ring); background: rgba(255,255,255,.06)
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .actions{display:flex; flex-wrap:wrap; gap: 10px; align-items:center}
-    button, .btn{
-      appearance:none; border:0; cursor:pointer; color:white; font-weight:600; letter-spacing:.01em;
-      padding: 12px 18px; border-radius: 12px; background: linear-gradient(135deg, var(--brand1), var(--brand2));
-      box-shadow: 0 10px 26px rgba(108,124,255,.35); transition: transform .12s ease, box-shadow .2s ease;
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    button:hover,.btn:hover{transform: translateY(-1px); box-shadow: 0 14px 34px rgba(108,124,255,.45)}
-    button:active,.btn:active{transform:none}
 
-    .matrix-container{overflow:auto; background: rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06);
-      border-radius: 12px; padding: 12px}
-
-    table{border-collapse: collapse; width: 100%; background: transparent}
-    th, td{border:1px solid rgba(255,255,255,.08); padding: 8px; text-align:center}
-    th{background: linear-gradient(180deg, rgba(108,124,255,.15), rgba(154,107,255,.12)); color: #eef0ff; font-weight:600}
-    td input{width: 80px; max-width: 100%; background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
-      border-radius: 8px; color: var(--text); padding: 8px}
-
-    .results{background: linear-gradient(180deg, rgba(108,124,255,.08), rgba(154,107,255,.06)); border:1px solid rgba(255,255,255,.08);
-      border-radius: 14px; padding: 18px}
-    .results h3{margin:0 0 8px; color:#dfe3ff}
-
-    footer{border-top: 1px solid rgba(255,255,255,.06); background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
-      padding: 22px; text-align:center; color: var(--muted); font-size: 13px}
-    footer a{color:#dfe3ff; text-decoration: none}
-    footer a:hover{color:#bfc6ff}
-    .branding{margin-top:6px; font-size:12px; color:#aeb6dc}
-    .logo{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px; margin-top: 10px;
-      color:#dfe3ff; font-weight:700; letter-spacing:.02em
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 30px;
+      flex: 1;
     }
-    .logo-mark{width:26px; height:26px; border-radius:8px; background: linear-gradient(135deg, var(--brand1), var(--brand2));
-      box-shadow: 0 6px 18px rgba(108,124,255,.45), inset 0 0 12px rgba(255,255,255,.18)}
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .controls {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      background: #fafafa;
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: #999;
+    }
+
+    button {
+      padding: 10px 24px;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    button:active {
+      background: #222;
+    }
+
+    .matrix-section {
+      margin-bottom: 30px;
+    }
+
+    .matrix-header {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(21, 1fr);
+      gap: 2px;
+      background: #e0e0e0;
+      padding: 2px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    .matrix-cell {
+      width: 100%;
+      min-width: 45px;
+      padding: 6px 4px;
+      border: none;
+      background: #fff;
+      text-align: center;
+      font-size: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .matrix-cell:focus {
+      outline: 2px solid #333;
+      outline-offset: -2px;
+      z-index: 1;
+    }
+
+    .results {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .results h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .result-item {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .result-label {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .result-value {
+      font-family: 'Courier New', monospace;
+      color: #222;
+      font-size: 16px;
+      margin-left: 8px;
+    }
+
+    .eigenvector {
+      margin-top: 15px;
+      padding: 12px;
+      background: #fff;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+    }
+
+    footer a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="brand-badge"><span class="dot"></span> Minimal • Focused • Dulina</div>
-      <h1>Leslie Matrix Calculator (21×21)</h1>
-      <p class="subtitle">Advanced Population Dynamics Tool</p>
-      <div class="logo"><span class="logo-mark"></span> Dulina Pathirana</div>
+      <h1>Leslie Matrix Eigenvalue Calculator</h1>
+      <p class="subtitle">Calculate the dominant eigenvalue of a 21×21 Leslie matrix</p>
     </header>
 
-    <div class="content">
-      <div class="card">
-        <div class="grid">
-          <div>
-            <label for="timeSteps">Number of Time Steps</label>
-            <input type="number" id="timeSteps" />
-          </div>
-          <div>
-            <label for="csvFile">Upload Leslie Matrix (CSV)</label>
-            <input type="file" id="csvFile" accept=".csv" />
-          </div>
-          <div>
-            <label for="initialPopulation">Upload Initial Population (CSV)</label>
-            <input type="file" id="initialPopulation" accept=".csv" />
-          </div>
-        </div>
-        <div class="actions" style="margin-top:12px">
-          <button id="calculateButton" onclick="calculate()">Calculate Population Growth</button>
-        </div>
+    <div class="controls">
+      <div class="control-group">
+        <label for="csvFile">Upload Matrix (CSV)</label>
+        <input type="file" id="csvFile" accept=".csv">
       </div>
+      <div class="control-group">
+        <button onclick="calculateEigenvalue()">Calculate Dominant Eigenvalue</button>
+      </div>
+    </div>
 
-      <div class="matrix-container card" id="matrixContainer"></div>
+    <div class="matrix-section">
+      <div class="matrix-header">Leslie Matrix (21×21)</div>
+      <div class="matrix-grid" id="matrixGrid"></div>
+    </div>
 
-      <div class="results" id="results" style="display:none">
-        <h3>Results</h3>
-        <div id="resultsContent"></div>
+    <div class="results hidden" id="results">
+      <h2>Results</h2>
+      <div class="result-item">
+        <span class="result-label">Dominant Eigenvalue (λ₁):</span>
+        <span class="result-value" id="eigenvalue">—</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Iterations:</span>
+        <span class="result-value" id="iterations">—</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">Dominant Eigenvector:</span>
+        <div class="eigenvector" id="eigenvector"></div>
       </div>
     </div>
 
     <footer>
-      <div>© 2025 Leslie Matrix Calculator</div>
-      <div class="branding">Designed and developed by
-        <a href="https://github.com/DulinaPathirana" target="_blank" rel="noopener">Dulina Pathirana</a>
-      </div>
+      Designed and developed by <a href="https://github.com/DulinaPathirana" target="_blank" rel="noopener">Dulina Pathirana</a>
     </footer>
   </div>
 
-  <!-- Preserve existing scripts and logic if present below -->
   <script>
-    // This script block intentionally left minimal to preserve original logic expectations.
-    // If original file had functions (e.g., calculate, CSV parsing, matrix rendering),
-    // they must remain exactly as before. If the original script exists below in repository,
-    // keep its contents unchanged. If not present, we provide a harmless stub to avoid breaking onclick.
-    if (typeof calculate !== 'function') {
-      function calculate(){
-        // Non-breaking stub: original implementation should override this if present.
-        alert('Running calculation... (functionality unchanged — this is a visual refresh only)');
+    const MATRIX_SIZE = 21;
+    let matrix = [];
+
+    // Initialize matrix grid
+    function initMatrix() {
+      const grid = document.getElementById('matrixGrid');
+      grid.innerHTML = '';
+      matrix = [];
+      
+      for (let i = 0; i < MATRIX_SIZE; i++) {
+        matrix[i] = [];
+        for (let j = 0; j < MATRIX_SIZE; j++) {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'matrix-cell';
+          input.value = '0';
+          input.dataset.row = i;
+          input.dataset.col = j;
+          input.addEventListener('input', function() {
+            const val = parseFloat(this.value);
+            matrix[i][j] = isNaN(val) ? 0 : val;
+          });
+          grid.appendChild(input);
+          matrix[i][j] = 0;
+        }
       }
     }
+
+    // Handle CSV file upload
+    document.getElementById('csvFile').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const csv = event.target.result;
+        const lines = csv.trim().split('\n');
+        
+        if (lines.length !== MATRIX_SIZE) {
+          alert(`CSV must contain exactly ${MATRIX_SIZE} rows`);
+          return;
+        }
+
+        const grid = document.getElementById('matrixGrid');
+        const inputs = grid.querySelectorAll('.matrix-cell');
+        
+        for (let i = 0; i < MATRIX_SIZE; i++) {
+          const values = lines[i].split(',').map(v => v.trim());
+          
+          if (values.length !== MATRIX_SIZE) {
+            alert(`Row ${i + 1} must contain exactly ${MATRIX_SIZE} values`);
+            return;
+          }
+          
+          for (let j = 0; j < MATRIX_SIZE; j++) {
+            const val = parseFloat(values[j]);
+            if (isNaN(val)) {
+              alert(`Invalid number at row ${i + 1}, column ${j + 1}`);
+              return;
+            }
+            matrix[i][j] = val;
+            inputs[i * MATRIX_SIZE + j].value = val.toString();
+          }
+        }
+        
+        alert('Matrix loaded successfully!');
+      };
+      reader.readAsText(file);
+    });
+
+    // Power iteration method to find dominant eigenvalue
+    function calculateEigenvalue() {
+      // Check if matrix has non-zero values
+      let hasNonZero = false;
+      for (let i = 0; i < MATRIX_SIZE; i++) {
+        for (let j = 0; j < MATRIX_SIZE; j++) {
+          if (matrix[i][j] !== 0) {
+            hasNonZero = true;
+            break;
+          }
+        }
+        if (hasNonZero) break;
+      }
+
+      if (!hasNonZero) {
+        alert('Matrix is empty. Please enter values or upload a CSV file.');
+        return;
+      }
+
+      const maxIterations = 1000;
+      const tolerance = 1e-10;
+      
+      // Initialize eigenvector with random values
+      let v = new Array(MATRIX_SIZE).fill(0).map(() => Math.random());
+      
+      // Normalize initial vector
+      let norm = Math.sqrt(v.reduce((sum, val) => sum + val * val, 0));
+      v = v.map(val => val / norm);
+      
+      let eigenvalue = 0;
+      let iterations = 0;
+      
+      for (iterations = 0; iterations < maxIterations; iterations++) {
+        // Multiply matrix by vector
+        let newV = new Array(MATRIX_SIZE).fill(0);
+        for (let i = 0; i < MATRIX_SIZE; i++) {
+          for (let j = 0; j < MATRIX_SIZE; j++) {
+            newV[i] += matrix[i][j] * v[j];
+          }
+        }
+        
+        // Calculate new eigenvalue (Rayleigh quotient)
+        let newEigenvalue = 0;
+        for (let i = 0; i < MATRIX_SIZE; i++) {
+          newEigenvalue += newV[i] * v[i];
+        }
+        
+        // Normalize new vector
+        norm = Math.sqrt(newV.reduce((sum, val) => sum + val * val, 0));
+        
+        if (norm < 1e-10) {
+          alert('Matrix may be singular or have zero dominant eigenvalue.');
+          return;
+        }
+        
+        newV = newV.map(val => val / norm);
+        
+        // Check convergence
+        if (Math.abs(newEigenvalue - eigenvalue) < tolerance) {
+          eigenvalue = newEigenvalue;
+          v = newV;
+          break;
+        }
+        
+        eigenvalue = newEigenvalue;
+        v = newV;
+      }
+      
+      // Display results
+      document.getElementById('eigenvalue').textContent = eigenvalue.toFixed(10);
+      document.getElementById('iterations').textContent = iterations + 1;
+      
+      const eigenvectorDiv = document.getElementById('eigenvector');
+      eigenvectorDiv.innerHTML = v.map((val, i) => 
+        `[${i}] ${val.toFixed(10)}`
+      ).join('<br>');
+      
+      document.getElementById('results').classList.remove('hidden');
+    }
+
+    // Initialize on load
+    initMatrix();
   </script>
 </body>
 </html>
