@@ -10,202 +10,187 @@
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      line-height: 1.6;
-      padding: 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      color: #2c3e50;
+      line-height: 1.7;
+      padding: 40px 20px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
-
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      padding: 30px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      padding: 50px;
       flex: 1;
     }
-
     header {
       text-align: center;
-      margin-bottom: 40px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #e8eef3;
     }
-
     h1 {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 600;
-      color: #222;
-      margin-bottom: 8px;
+      color: #34495e;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
     }
-
     .subtitle {
-      font-size: 14px;
-      color: #666;
+      font-size: 15px;
+      color: #7f8c8d;
+      font-weight: 400;
     }
-
     .controls {
       display: flex;
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 24px;
+      margin-bottom: 40px;
       align-items: flex-end;
       flex-wrap: wrap;
     }
-
     .control-group {
       flex: 1;
-      min-width: 200px;
+      min-width: 220px;
     }
-
     label {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
-      color: #555;
-      margin-bottom: 6px;
+      color: #5a6c7d;
+      margin-bottom: 8px;
     }
-
     input[type="file"] {
       width: 100%;
-      padding: 8px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      padding: 12px 16px;
+      border: 2px solid #e1e8ed;
+      border-radius: 10px;
       font-size: 14px;
-      background: #fafafa;
+      background: #f8fafb;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
-
     input[type="file"]:hover {
-      border-color: #999;
+      border-color: #b8c5d0;
+      background: #ffffff;
     }
-
     button {
-      padding: 10px 24px;
-      background: #333;
-      color: #fff;
+      padding: 13px 32px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
       border: none;
-      border-radius: 4px;
-      font-size: 14px;
+      border-radius: 10px;
+      font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.25);
     }
-
     button:hover {
-      background: #555;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.35);
     }
-
     button:active {
-      background: #222;
+      transform: translateY(0);
     }
-
     .matrix-section {
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
-
     .matrix-header {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
-      color: #333;
-      margin-bottom: 15px;
+      color: #34495e;
+      margin-bottom: 20px;
     }
-
     .matrix-grid {
       display: grid;
       grid-template-columns: repeat(21, 1fr);
-      gap: 2px;
-      background: #e0e0e0;
-      padding: 2px;
-      border-radius: 4px;
+      gap: 3px;
+      background: #e8eef3;
+      padding: 3px;
+      border-radius: 10px;
       overflow-x: auto;
     }
-
     .matrix-cell {
       width: 100%;
-      min-width: 45px;
-      padding: 6px 4px;
+      min-width: 48px;
+      padding: 8px 6px;
       border: none;
-      background: #fff;
+      background: #ffffff;
       text-align: center;
       font-size: 12px;
       font-family: 'Courier New', monospace;
+      border-radius: 4px;
+      transition: all 0.2s ease;
     }
-
     .matrix-cell:focus {
-      outline: 2px solid #333;
-      outline-offset: -2px;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+      background: #f8fafb;
       z-index: 1;
     }
-
     .results {
-      margin-top: 30px;
-      padding: 20px;
-      background: #f9f9f9;
-      border-radius: 4px;
-      border: 1px solid #e0e0e0;
+      margin-top: 40px;
+      padding: 30px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+      border-radius: 12px;
+      border: 2px solid #e8eef3;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
-
     .results h2 {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
-      color: #333;
-      margin-bottom: 15px;
+      color: #34495e;
+      margin-bottom: 20px;
     }
-
     .result-item {
-      margin-bottom: 12px;
-      font-size: 14px;
+      margin-bottom: 16px;
+      font-size: 15px;
     }
-
     .result-label {
       font-weight: 500;
-      color: #555;
+      color: #5a6c7d;
     }
-
     .result-value {
       font-family: 'Courier New', monospace;
-      color: #222;
+      color: #2c3e50;
       font-size: 16px;
-      margin-left: 8px;
+      margin-left: 10px;
     }
-
     .eigenvector {
-      margin-top: 15px;
-      padding: 12px;
-      background: #fff;
-      border-radius: 4px;
+      margin-top: 20px;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 8px;
       font-family: 'Courier New', monospace;
-      font-size: 12px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    footer {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid #e0e0e0;
-      text-align: center;
       font-size: 13px;
-      color: #666;
+      max-height: 240px;
+      overflow-y: auto;
+      border: 1px solid #e8eef3;
     }
-
+    footer {
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 2px solid #e8eef3;
+      text-align: center;
+      font-size: 14px;
+      color: #7f8c8d;
+    }
     footer a {
-      color: #333;
+      color: #667eea;
       text-decoration: none;
       font-weight: 500;
+      transition: color 0.3s ease;
     }
-
     footer a:hover {
+      color: #764ba2;
       text-decoration: underline;
     }
-
     .hidden {
       display: none;
     }
@@ -217,7 +202,6 @@
       <h1>Leslie Matrix Eigenvalue Calculator</h1>
       <p class="subtitle">Calculate the dominant eigenvalue of a 21×21 Leslie matrix</p>
     </header>
-
     <div class="controls">
       <div class="control-group">
         <label for="csvFile">Upload Matrix (CSV)</label>
@@ -227,12 +211,10 @@
         <button onclick="calculateEigenvalue()">Calculate Dominant Eigenvalue</button>
       </div>
     </div>
-
     <div class="matrix-section">
       <div class="matrix-header">Leslie Matrix (21×21)</div>
       <div class="matrix-grid" id="matrixGrid"></div>
     </div>
-
     <div class="results hidden" id="results">
       <h2>Results</h2>
       <div class="result-item">
@@ -248,16 +230,13 @@
         <div class="eigenvector" id="eigenvector"></div>
       </div>
     </div>
-
     <footer>
       Designed and developed by <a href="https://github.com/DulinaPathirana" target="_blank" rel="noopener">Dulina Pathirana</a>
     </footer>
   </div>
-
   <script>
     const MATRIX_SIZE = 21;
     let matrix = [];
-
     // Initialize matrix grid
     function initMatrix() {
       const grid = document.getElementById('matrixGrid');
@@ -282,12 +261,10 @@
         }
       }
     }
-
     // Handle CSV file upload
     document.getElementById('csvFile').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(event) {
         const csv = event.target.result;
@@ -297,7 +274,6 @@
           alert(`CSV must contain exactly ${MATRIX_SIZE} rows`);
           return;
         }
-
         const grid = document.getElementById('matrixGrid');
         const inputs = grid.querySelectorAll('.matrix-cell');
         
@@ -324,7 +300,6 @@
       };
       reader.readAsText(file);
     });
-
     // Power iteration method to find dominant eigenvalue
     function calculateEigenvalue() {
       // Check if matrix has non-zero values
@@ -338,12 +313,10 @@
         }
         if (hasNonZero) break;
       }
-
       if (!hasNonZero) {
         alert('Matrix is empty. Please enter values or upload a CSV file.');
         return;
       }
-
       const maxIterations = 1000;
       const tolerance = 1e-10;
       
@@ -404,7 +377,6 @@
       
       document.getElementById('results').classList.remove('hidden');
     }
-
     // Initialize on load
     initMatrix();
   </script>
